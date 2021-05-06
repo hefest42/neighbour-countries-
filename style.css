@@ -7,7 +7,7 @@
 body {
     background-color: rgb(241, 241, 241);
     font-family: "Abel", sans-serif;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 /* ! nav bar */
 .nav-bar {
@@ -79,4 +79,40 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+/* ! neighbour countries */
+
+.neighbour-container {
+    width: 100%;
+    height: 17.5rem;
+    margin-top: 7rem;
+    display: flex;
+    justify-content: center;
+}
+
+.neighbours {
+    min-width: 80%;
+    max-width: auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.neighbour-country {
+    background-color: white;
+    width: 15rem;
+    height: 100%;
+}
+
+.neighbour-flag {
+    width: 100%;
+}
+
+.neighbour-flag img {
+    width: 100%;
+    height: auto;
+}
+
+.neighbour-info {
 }
