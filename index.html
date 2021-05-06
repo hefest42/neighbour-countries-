@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <nav class="nav-bar">
-        <p class="nav-description">
-            Click on any country to show information about it, and its <span class="highlight">neighbours</span>
-        </p>
-    </nav>
-    <div class="map"></div>
-    <div class="main-country">
-        <div class="main-flag">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Flag_of_Serbia.svg" alt="country flag">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Abel&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <!-- nav bar -->
+        <nav class="nav-bar">
+            <div class="nav-description">
+                Click on any country to show information about it, and its
+                <span class="highlight">neighbours</span>
+            </div>
+            <div class="close-nav-btn">&#10006;</div>
+        </nav>
+        <!-- map section -->
+        <div class="map"></div>
+
+        <!-- country section -->
+        <!-- main country -->
+        <div class="main-country">
+            <div class="main-flag">
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Flag_of_Serbia.svg"
+                    alt="country flag"
+                />
+            </div>
+            <div class="main-continent">Europe</div>
+            <div class="main-region">Subregion of the continent</div>
+            <div class="main-capital">Capital: <span>Belgrade</span></div>
+            <div class="main-population">Population: <span>7m</span></div>
+            <div class="main-language">Language: <span>Serbian</span></div>
+            <div class="main-currency">
+                Currency: <span>Serbian Dinar</span>
+            </div>
         </div>
-        <div class="main-continent">Europe</div>
-        <div class="main-region">Subregion of the continent</div>
-        <div class="main-capital">Capital: <span>Belgrade</span></div>
-        <div class="main-population">Population: <span>7m</span></div>
-        <div class="main-language">Language: <span>Serbian</span></div>
-        <div class="main-currency">Currency: <span>Serbian Dinar</span></div>
-    </div>
-</body>
+
+        <!-- neighbour countries -->
+    </body>
 </html>
