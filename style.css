@@ -43,6 +43,14 @@ body {
     transition: all 0.3 linear;
 }
 
+/* !map section */
+
+.map {
+    /* display: none; */
+    width: 100%;
+    height: 100vh;
+}
+
 /* ! hero country */
 
 .main-country-container {
@@ -131,11 +139,11 @@ body {
 /* ! reset button */
 
 button {
+    display: none;
     text-decoration: none;
     position: absolute;
     top: 50%;
     right: 2%;
-    display: block;
     height: 100px;
     width: 100px;
     padding: 10px;
