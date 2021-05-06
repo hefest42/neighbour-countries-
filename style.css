@@ -94,9 +94,10 @@ body {
 .neighbours {
     min-width: 80%;
     max-width: auto;
-    height: 100%;
+    height: auto;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .neighbour-country {
@@ -115,4 +116,10 @@ body {
 }
 
 .neighbour-info {
+    height: 50%;
+    padding: 5px 5px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
