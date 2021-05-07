@@ -7,6 +7,11 @@ const btnCloseNav = document.querySelector(".close-nav-btn");
 // Selecint hero country elements
 const heroCountryContainer = document.querySelector(".main-country-container");
 
+// selecting neighbour countires elements
+const neighbourCountryContainer = document.querySelector(
+    ".neighbour-container"
+);
+
 //! Closing the nav bar on clicking X
 btnCloseNav.addEventListener("click", function (e) {
     e.preventDefault();
@@ -34,7 +39,7 @@ getCurrentPosition();
 
 //! Displaying the map
 const displayMap = function (lat, lng) {
-    const map = L.map("map").setView([lat, lng], 7);
+    const map = L.map("map").setView([lat, lng], 4);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
@@ -48,7 +53,7 @@ const displayMap = function (lat, lng) {
 //! getting the country of the click event and calling the show country function
 const getHeroCountry = async function (event) {
     try {
-        const { lat, lng } = event.latlng;
+        const { lat, lng } = await event.latlng;
         const positionFetch = await fetch(
             `https://geocode.xyz/${lat},${lng}?geoit=json`
         );
@@ -59,7 +64,7 @@ const getHeroCountry = async function (event) {
         const position = await positionFetch.json();
         // console.log(position);
         const country = position.country;
-        if (!country) throw new Error("Could not get the country");
+        // if (!country) throw new Error("Could not get the country");
 
         displayCountryInformation(country);
     } catch (err) {
@@ -87,34 +92,85 @@ const displayHeroCountry = function (country) {
     map.style.display = "none";
     console.log(country);
 
-    const html = `
-        <div class="main-country">
-            <div class="main-flag">
-                <img
-                    src="${country.flag}"
-                    alt="country flag"
-                />
-            </div>
-            <div class="main-info">
-                <div class="main-name">Name: <span>${country.name}</span></div>
-                <div class="main-continent">
-                    Continent: <span>Europe</span>
-                </div>
-                <div class="main-region">Region: <span></span</div>
-                <div class="main-capital">
-                    Capital: <span>${country.capital}</span>
-                </div>
-                <div class="main-population">
-                    Population: <span>7m</span>
-                </div>
-                <div class="main-language">
-                    Language: <span>Serbian</span>
-                </div>
-                <div class="main-currency">
-                    Currency: <span>Serbian Dinar</span>
+    const html = `<div class="main-country">
+    <div class="main-flag">
+        <img
+            src="${country.flag}"
+            alt="country flag"
+        />
+    </div>
+    <div class="main-info">
+        <div class="main-name">Name: <span>${country.name}</span></div>
+        <div class="main-continent">
+            Continent: <span>${country.region}</span>
+        </div>
+        <div class="main-region">Region: ${country.subregion}</div>
+        <div class="main-capital">
+            Capital: <span>${country.capital}</span>
+        </div>
+        <div class="main-population">
+            Population: <span>${(+country.population / 1000000).toFixed(
+                1
+            )}m</span>
+        </div>
+        <div class="main-language">
+            Language: <span>${country.languages[0].name}</span>
+        </div>
+        <div class="main-currency">
+            Currency: <span>${country.currencies[0].name} ${
+        country.currencies[0].symbol
+    }</span>
                 </div>
             </div>
         </div>`;
 
     heroCountryContainer.insertAdjacentHTML("afterbegin", html);
+
+    // ! selecing neighbours and calling the function to display them
+    const countryNeighbours = country.borders;
+    displayNeighbours(countryNeighbours);
+};
+
+const displayNeighbours = async function (countries) {
+    const getNeighbours = countries.map(async country => {
+        return await fetch(`https://restcountries.eu/rest/v2/alpha/${country}`);
+    });
+
+    const neighbours = await Promise.all(getNeighbours);
+
+    neighbours.forEach(async neighbour => {
+        const data = await neighbour.json();
+        console.log(data);
+
+        const html = `
+        <div class="neighbours">
+            <div class="neighbour-country">
+                <div class="neighbour-flag">
+                    <img
+                        src="${data.flag}"
+                        alt="country flag"
+                    />
+                </div>
+                <div class="neighbour-info">
+                    <div class="neighbour-name">
+                        Name: <span>${data.name}</span>
+                    </div>
+                    <div class="neighbour-capital">
+                        Capital: <span>${data.capital}</span>
+                    </div>
+                    <div class="neighbour-population">
+                        Population: <span>${(
+                            +data.population / 1000000
+                        ).toFixed(1)}m</span>
+                    </div>
+                    <div class="neighbour-language">
+                        Language: <span>${data.languages[0].name}</span>
+                    </div>
+                    <div class="neighbour-currency">
+                        Currency: <span>${data.currencies[0].name}</span>
+                </div>
+        </div>`;
+
+        neighbourCountryContainer.insertAdjacentHTML("afterbegin", html);
+    });
 };
