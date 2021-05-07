@@ -46,98 +46,112 @@ body {
 /* !map section */
 
 .map {
-    display: none;
+    /* display: none; */
     width: 100%;
     height: 100vh;
+}
+
+/* ! countires section */
+
+.country-section {
+    width: 100%;
+    height: 100vh;
+    /* background-color: brown; */
+    /* TODO: change from "none" to "flex" */
+    display: none;
+    flex-direction: column;
+}
+
+.top-section {
+    height: 60%;
+    display: flex;
+    justify-content: center;
 }
 
 /* ! hero country */
 
 .main-country-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 2rem;
+    background-color: white;
+    width: 25rem;
+    height: 100%;
 }
 
-.main-country {
-    background-color: white;
-    width: auto;
-    height: 35rem;
-    font-size: 1.45rem;
-    font-weight: bold;
-    text-align: left;
+.main-flag-container {
+    width: 100%;
+    height: 40%;
 }
 
 .main-flag {
     width: 100%;
-    height: 15rem;
-    /* border: 5px solid black; */
+    height: 100%;
 }
 
-.main-flag img {
+main-flag img {
     width: 100%;
-    height: 100%;
-    /* background-size: cover !important; */
 }
 
 .main-info {
+    /* background-color: tomato; */
+    width: 100%;
+    height: 60%;
     padding: 10px 10px;
-    height: 20rem;
+    font-size: 1.25rem;
+    font-weight: bold;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 /* ! neighbour countries */
-.section2 {
+
+.bottom-section {
+    margin-top: 2rem;
     width: 100%;
     height: auto;
-    /* background-color: blue; */
+    /* background-color: teal; */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .neighbour-container {
-    /* background-color: teal; */
-    width: 90%;
-    height: 17.5rem;
-    margin-top: 7rem;
+    padding: 0.5rem 0.5rem;
+    /* background-color: orangered; */
+    width: 80%;
+    height: auto;
     display: flex;
     justify-content: center;
-}
-
-.neighbours {
-    height: 22rem;
-    display: flex;
-    justify-content: space-between;
+    /* align-items: center; */
     flex-wrap: wrap;
+    grid-gap: 5px;
 }
 
-.neighbours > div {
-    margin: 10px;
-}
+/* .neighbour-container div {
+    margin-top: 10px;
+    margin-right: 10px;
+} */
 
-.neighbour-country {
+.neighbour {
     background-color: white;
     width: 15rem;
-    height: 100%;
+    height: 22rem;
+}
+
+.neighbour-flag-container {
+    /* background-color: blue; */
+    width: 100%;
+    height: 30%;
 }
 
 .neighbour-flag {
     width: 100%;
-}
-
-.neighbour-flag img {
-    width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 .neighbour-info {
-    height: 50%;
-    padding: 5px 5px;
-    font-weight: 700;
+    font-weight: 500;
+    padding: 15px 0px 10px 10px;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
