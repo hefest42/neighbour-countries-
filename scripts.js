@@ -4,6 +4,9 @@
 const nav = document.querySelector(".nav-bar");
 const btnCloseNav = document.querySelector(".close-nav-btn");
 
+// Selecint hero country elements
+const heroCountryContainer = document.querySelector(".main-country-container");
+
 //! Closing the nav bar on clicking X
 btnCloseNav.addEventListener("click", function (e) {
     e.preventDefault();
@@ -49,11 +52,12 @@ const getHeroCountry = async function (event) {
         const positionFetch = await fetch(
             `https://geocode.xyz/${lat},${lng}?geoit=json`
         );
-        console.log(positionFetch);
+
         if (!positionFetch.ok)
             throw new Error("Having issues retrieving coordinates");
 
         const position = await positionFetch.json();
+        // console.log(position);
         const country = position.country;
         if (!country) throw new Error("Could not get the country");
 
@@ -63,4 +67,54 @@ const getHeroCountry = async function (event) {
     }
 };
 
-//! showing stats about the clicked country
+//! getting stats about the clicked country
+
+const displayCountryInformation = async function (country) {
+    try {
+        const getCountryInfo = await fetch(
+            `https://restcountries.eu/rest/v2/name/${country}`
+        );
+        const [heroCountry] = await getCountryInfo.json();
+        // console.log(heroCountry);
+
+        displayHeroCountry(heroCountry);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+const displayHeroCountry = function (country) {
+    map.style.display = "none";
+    console.log(country);
+
+    const html = `
+        <div class="main-country">
+            <div class="main-flag">
+                <img
+                    src="${country.flag}"
+                    alt="country flag"
+                />
+            </div>
+            <div class="main-info">
+                <div class="main-name">Name: <span>${country.name}</span></div>
+                <div class="main-continent">
+                    Continent: <span>Europe</span>
+                </div>
+                <div class="main-region">Region: <span></span</div>
+                <div class="main-capital">
+                    Capital: <span>${country.capital}</span>
+                </div>
+                <div class="main-population">
+                    Population: <span>7m</span>
+                </div>
+                <div class="main-language">
+                    Language: <span>Serbian</span>
+                </div>
+                <div class="main-currency">
+                    Currency: <span>Serbian Dinar</span>
+                </div>
+            </div>
+        </div>`;
+
+    heroCountryContainer.insertAdjacentHTML("afterbegin", html);
+};
