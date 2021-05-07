@@ -4,6 +4,8 @@
 const nav = document.querySelector(".nav-bar");
 const btnCloseNav = document.querySelector(".close-nav-btn");
 
+const countriesContainer = document.querySelector(".country-section");
+
 // Selecint hero country elements
 const heroCountryContainer = document.querySelector(".main-country-container");
 
@@ -90,39 +92,41 @@ const displayCountryInformation = async function (country) {
 
 const displayHeroCountry = function (country) {
     map.style.display = "none";
+    countriesContainer.style.display = "flex";
     console.log(country);
 
-    const html = `<div class="main-country">
-    <div class="main-flag">
-        <img
-            src="${country.flag}"
-            alt="country flag"
-        />
-    </div>
-    <div class="main-info">
-        <div class="main-name">Name: <span>${country.name}</span></div>
-        <div class="main-continent">
-            Continent: <span>${country.region}</span>
+    const html = `
+            <div class="main-flag-container">
+            <img
+                class="main-flag"
+                src="${country.flag}"
+                alt="hero country flag"
+            />
         </div>
-        <div class="main-region">Region: ${country.subregion}</div>
-        <div class="main-capital">
-            Capital: <span>${country.capital}</span>
-        </div>
-        <div class="main-population">
-            Population: <span>${(+country.population / 1000000).toFixed(
-                1
-            )}m</span>
-        </div>
-        <div class="main-language">
-            Language: <span>${country.languages[0].name}</span>
-        </div>
-        <div class="main-currency">
-            Currency: <span>${country.currencies[0].name} ${
+        <div class="main-info">
+            <div class="main-name">Name: <span>${country.name}</span></div>
+            <div class="main-continent">
+                Continent: <span>${country.region}</span>
+            </div>
+            <div class="main-region">Region: ${country.subregion}</div>
+            <div class="main-capital">
+                Capital: <span>${country.capital}</span>
+            </div>
+            <div class="main-population">
+                Population: <span>${(+country.population / 1000000).toFixed(
+                    1
+                )}</span>
+            </div>
+            <div class="main-language">
+                Language: <span>${country.languages[0].name}</span>
+            </div>
+            <div class="main-currency">
+                Currency: <span>${country.currencies[0].name} ${
         country.currencies[0].symbol
     }</span>
-                </div>
             </div>
-        </div>`;
+        </div>
+    `;
 
     heroCountryContainer.insertAdjacentHTML("afterbegin", html);
 
@@ -141,35 +145,6 @@ const displayNeighbours = async function (countries) {
     neighbours.forEach(async neighbour => {
         const data = await neighbour.json();
         console.log(data);
-
-        const html = `
-        <div class="neighbours">
-            <div class="neighbour-country">
-                <div class="neighbour-flag">
-                    <img
-                        src="${data.flag}"
-                        alt="country flag"
-                    />
-                </div>
-                <div class="neighbour-info">
-                    <div class="neighbour-name">
-                        Name: <span>${data.name}</span>
-                    </div>
-                    <div class="neighbour-capital">
-                        Capital: <span>${data.capital}</span>
-                    </div>
-                    <div class="neighbour-population">
-                        Population: <span>${(
-                            +data.population / 1000000
-                        ).toFixed(1)}m</span>
-                    </div>
-                    <div class="neighbour-language">
-                        Language: <span>${data.languages[0].name}</span>
-                    </div>
-                    <div class="neighbour-currency">
-                        Currency: <span>${data.currencies[0].name}</span>
-                </div>
-        </div>`;
 
         neighbourCountryContainer.insertAdjacentHTML("afterbegin", html);
     });
