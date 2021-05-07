@@ -84,10 +84,12 @@ body {
 .main-flag {
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 main-flag img {
     width: 100%;
+    height: auto;
 }
 
 .main-info {
@@ -146,6 +148,7 @@ main-flag img {
 .neighbour-flag {
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .neighbour-info {
