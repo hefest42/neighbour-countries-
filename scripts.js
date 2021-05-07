@@ -15,7 +15,6 @@ const getCurrentPosition = async function () {
     try {
         const position = await navigator.geolocation.getCurrentPosition(
             function (position) {
-                console.log(position);
                 const { latitude: lat, longitude: lng } = position.coords;
                 displayMap(lat, lng);
             },
@@ -32,17 +31,36 @@ getCurrentPosition();
 
 //! Displaying the map
 const displayMap = function (lat, lng) {
-    const map = L.map("map").setView([lat, lng], 13);
+    const map = L.map("map").setView([lat, lng], 7);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    // L.marker([51.5, -0.09])
-    //     .addTo(map)
-    //     .bindPopup("A pretty CSS3 popup.<br> Easily customizable.")
-    //     .openPopup();
+    // ! When clicking on the map
+    map.on("click", getHeroCountry.bind(this));
 };
 
-// displayMap();
+//! getting the country of the click event and calling the show country function
+const getHeroCountry = async function (event) {
+    try {
+        const { lat, lng } = event.latlng;
+        const positionFetch = await fetch(
+            `https://geocode.xyz/${lat},${lng}?geoit=json`
+        );
+        console.log(positionFetch);
+        if (!positionFetch.ok)
+            throw new Error("Having issues retrieving coordinates");
+
+        const position = await positionFetch.json();
+        const country = position.country;
+        if (!country) throw new Error("Could not get the country");
+
+        displayCountryInformation(country);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+//! showing stats about the clicked country
