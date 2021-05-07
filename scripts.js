@@ -146,6 +146,39 @@ const displayNeighbours = async function (countries) {
         const data = await neighbour.json();
         console.log(data);
 
+        const html = `
+        <div class="neighbour">
+            <div class="neighbour-flag-container">
+                <img
+                    class="neighbour-flag"
+                    src="${data.flag}"
+                    alt="hero country flag"
+                />
+            </div>
+            <div class="neighbour-info">
+                <div class="neighbour-name">Name: <span>${
+                    data.name
+                }</span></div>
+                <div class="neighbour-capital">
+                    Capital: <span>${data.capital}</span>
+                </div>
+                <div class="neighbour-population">
+                    Population: <span>${(+data.population / 1000000).toFixed(
+                        1
+                    )}</span>
+                </div>
+                <div class="neighbour-language">
+                    Language: <span>${data.languages[0].name}</span>
+                </div>
+                <div class="neighbour-currency">
+                    Currency: <span>${data.currencies[0].name} ${
+            data.currencies[0].symbol
+        }</span>
+                </div>
+            </div>
+        </div>
+        `;
+
         neighbourCountryContainer.insertAdjacentHTML("afterbegin", html);
     });
 };
