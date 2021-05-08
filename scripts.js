@@ -4,6 +4,9 @@
 const nav = document.querySelector(".nav-bar");
 const btnCloseNav = document.querySelector(".close-nav-btn");
 
+// selecting the map
+const mapContainer = document.querySelector(".map");
+
 const countriesContainer = document.querySelector(".country-section");
 
 // Selecint hero country elements
@@ -14,11 +17,33 @@ const neighbourCountryContainer = document.querySelector(
     ".neighbour-container"
 );
 
+// reset button eleement
+const btnReset = document.querySelector(".reset-btn");
+
 //! Closing the nav bar on clicking X
 btnCloseNav.addEventListener("click", function (e) {
     e.preventDefault();
 
     nav.classList.add("nav-bar-closed");
+});
+
+//! reseting when pressing the reset-btn
+btnReset.addEventListener("click", function () {
+    //? displaying the map
+    mapContainer.style.display = "block";
+
+    countriesContainer.style.display = "none";
+
+    //? hiding the hero country
+    heroCountryContainer.style.display = "none";
+    heroCountryContainer.innerHTML = "";
+
+    //? hiding the neighbours
+    neighbourCountryContainer.style.display = "none";
+    neighbourCountryContainer.innerHTML = "";
+
+    //? hiding the button
+    btnReset.style.display = "none";
 });
 
 const getCoordinates = async function (clickE) {
@@ -130,8 +155,12 @@ const getCoordinates = async function (clickE) {
             );
         });
 
-        map.style.display = "none";
+        mapContainer.style.display = "none";
         countriesContainer.style.display = "flex";
+        heroCountryContainer.style.display = "block";
+        neighbourCountryContainer.style.display = "flex";
+        btnReset.style.display = "block";
+        //! END
     } catch (err) {
         console.error(err);
     }
