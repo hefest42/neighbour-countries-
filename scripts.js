@@ -20,6 +20,8 @@ const neighbourCountryContainer = document.querySelector(
 // reset button eleement
 const btnReset = document.querySelector(".reset-btn");
 
+// let map;
+
 //! Closing the nav bar on clicking X
 btnCloseNav.addEventListener("click", function (e) {
     e.preventDefault();
@@ -29,6 +31,8 @@ btnCloseNav.addEventListener("click", function (e) {
 
 //! reseting when pressing the reset-btn
 btnReset.addEventListener("click", function () {
+    // displayMap();
+
     //? displaying the map
     mapContainer.style.display = "block";
 
@@ -160,6 +164,7 @@ const getCoordinates = async function (clickE) {
         heroCountryContainer.style.display = "block";
         neighbourCountryContainer.style.display = "flex";
         btnReset.style.display = "block";
+        // map = 1;
         //! END
     } catch (err) {
         console.error(err);
@@ -167,7 +172,7 @@ const getCoordinates = async function (clickE) {
 };
 
 const displayMap = function () {
-    let map = L.map("map").setView([45.996723, 10.942614], 3);
+    const map = L.map("map").setView([45.996723, 10.942614], 3);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
