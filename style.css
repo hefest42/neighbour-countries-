@@ -11,6 +11,9 @@ body {
 }
 /* ! nav bar */
 .nav-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
     background-color: #03afff;
     color: black;
     width: 100%;
