@@ -167,7 +167,7 @@ const getCoordinates = async function (clickE) {
 };
 
 const displayMap = function () {
-    const map = L.map("map").setView([45.996723, 10.942614], 3);
+    let map = L.map("map").setView([45.996723, 10.942614], 3);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
