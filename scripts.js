@@ -21,6 +21,42 @@ btnCloseNav.addEventListener("click", function (e) {
     nav.classList.add("nav-bar-closed");
 });
 
+const getCoordinates = async function (clickE) {
+    try {
+        const { lat, lng } = clickE.latlng;
+        console.log(lat, lng);
+
+        const getClickedCountry = await fetch(
+            `https://geocode.xyz/${lat},${lng}?geoit=json`
+        );
+
+        if (!getClickedCountry.ok)
+            throw new Error(
+                `Having issues retrieving information about the country that was clicked on ${getClickedCountry.status}`
+            );
+
+        const clickedCountry = await getClickedCountry.json();
+        console.log(clickedCountry);
+        console.log(clickedCountry.country);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+const displayMap = function () {
+    const map = L.map("map").setView([45.996723, 10.942614], 4);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    map.on("click", getCoordinates);
+};
+
+displayMap();
+
+/*
 const getCurrentPosition = async function () {
     try {
         const position = await navigator.geolocation.getCurrentPosition(
@@ -182,3 +218,4 @@ const displayNeighbours = async function (countries) {
         neighbourCountryContainer.insertAdjacentHTML("afterbegin", html);
     });
 };
+*/
