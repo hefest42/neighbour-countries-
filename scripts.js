@@ -32,12 +32,106 @@ const getCoordinates = async function (clickE) {
 
         if (!getClickedCountry.ok)
             throw new Error(
-                `Having issues retrieving information about the country that was clicked on ${getClickedCountry.status}`
+                `Having issues retrieving information about the country that was clicked on (${getClickedCountry.status})`
             );
 
         const clickedCountry = await getClickedCountry.json();
-        console.log(clickedCountry);
-        console.log(clickedCountry.country);
+
+        const getCounryData = await fetch(
+            `https://restcountries.eu/rest/v2/name/${clickedCountry.country}`
+        );
+
+        if (!getCounryData.ok)
+            throw new Error(
+                `Issue with getting data about the country (${getCounryData.status})`
+            );
+
+        const [country] = await getCounryData.json();
+        console.log(country);
+
+        // prettier-ignore
+        const heroHTML = `
+            <div class="main-flag-container">
+            <img
+                class="main-flag"
+                src="${country.flag}"
+                alt="hero country flag"
+            />
+            </div>
+            <div class="main-info">
+                <div class="main-name">Name: <span>${country.name}</span></div>
+                <div class="main-continent">
+                    Continent: <span>${country.region}</span>
+                </div>
+                <div class="main-region">Region: <span>${country.subregion}</span></div>
+                <div class="main-capital">
+                    Capital: <span>${country.capital}</span>
+                </div>
+                <div class="main-population">
+                    Population: <span>${+(country.population / 1000000).toFixed(2)}m</span>
+                </div>
+                <div class="main-language">
+                    Language: <span>${country.languages[0].name}</span>
+                </div>
+                <div class="main-currency">
+                    Currency: <span>${country.currencies[0].name}</span>
+                </div>
+            </div>`;
+
+        heroCountryContainer.insertAdjacentHTML("afterbegin", heroHTML);
+
+        const neighboursArray = country.borders;
+
+        const getNeighbours = neighboursArray.map(async country => {
+            return await fetch(
+                `https://restcountries.eu/rest/v2/alpha/${country}`
+            );
+        });
+
+        const neighbours = await Promise.all(getNeighbours);
+
+        neighbours.forEach(async neighbour => {
+            const data = await neighbour.json();
+
+            //pretteir-ignore
+            const neighbourHTML = `
+            <div class="neighbour">
+                <div class="neighbour-flag-container">
+                    <img
+                        class="neighbour-flag"
+                        src="${data.flag}"
+                        alt="hero country flag"
+                    />
+                </div>
+                <div class="neighbour-info">
+                    <div class="neighbour-name">Name: <span>${
+                        data.name
+                    }</span></div>
+                    <div class="neighbour-capital">
+                        Capital: <span>${data.capital}</span>
+                    </div>
+                    <div class="neighbour-population">
+                        Population: <span>${(
+                            +data.population / 1000000
+                        ).toFixed(2)}</span>
+                    </div>
+                    <div class="neighbour-language">
+                        Language: <span>${data.languages[0].name}</span>
+                    </div>
+                    <div class="neighbour-currency">
+                        Currency: <span>${data.currencies[0].name}</span>
+                    </div>
+                </div>
+            </div>`;
+
+            neighbourCountryContainer.insertAdjacentHTML(
+                "afterbegin",
+                neighbourHTML
+            );
+        });
+
+        map.style.display = "none";
+        countriesContainer.style.display = "flex";
     } catch (err) {
         console.error(err);
     }
